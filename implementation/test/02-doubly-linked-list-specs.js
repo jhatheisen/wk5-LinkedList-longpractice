@@ -23,7 +23,7 @@ describe('DoublyLinkedNode Constructor', () => {
         node = new DoublyLinkedNode('A');
         expect(node).to.have.property('value');
         expect(node).to.have.property('next');
-        expect(node).to.have.property('prev');
+        expect(node).to.have.property('prev');  
     });
 });
 
@@ -121,13 +121,13 @@ describe('DoublyLinkedList Methods', () => {
             list.addToHead('C');
             list.addToHead('B');
             list.addToHead('A');
-            expect(list.length).to.eql(3);
+            expect(list.length).to.equal(3);
             list.removeFromHead();
-            expect(list.length).to.eql(2);
+            expect(list.length).to.equal(2);
             list.removeFromHead();
-            expect(list.length).to.eql(1);
+            expect(list.length).to.equal(1);
             list.removeFromHead();
-            expect(list.length).to.eql(0);
+            expect(list.length).to.equal(0);
         });
 
         it('Should remove and return the value from the head', () => {
@@ -135,14 +135,14 @@ describe('DoublyLinkedList Methods', () => {
             list.addToHead('B');
             list.addToHead('A');
 
-            expect(list.removeFromHead()).to.eql('A');
-            expect(list.head.value).to.eql('B');
+            expect(list.removeFromHead()).to.equal('A');
+            expect(list.head.value).to.equal('B');
 
-            expect(list.removeFromHead()).to.eql('B');
-            expect(list.head.value).to.eql('C');
+            expect(list.removeFromHead()).to.equal('B');
+            expect(list.head.value).to.equal('C');
 
-            expect(list.removeFromHead()).to.eql('C');
-            expect(list.head).to.eql(null);
+            expect(list.removeFromHead()).to.equal('C');
+            expect(list.head).to.equal(null);
         });
 
         it('Should set the prev pointer on the new head to be null', () => {
@@ -151,7 +151,7 @@ describe('DoublyLinkedList Methods', () => {
             list.addToHead('A');
 
             list.removeFromHead();
-            expect(list.head.prev).to.eql(null);
+            expect(list.head.prev).to.equal(null);
         });
     });
 
@@ -210,7 +210,7 @@ describe('DoublyLinkedList Methods', () => {
             expect(list.peekAtTail()).to.equal('B');
         });
     });
-
+    
     context('removeFromTail()', () => {
         it('Should return undefined for an empty list', () => {
             const result = list.removeFromTail();
@@ -222,13 +222,13 @@ describe('DoublyLinkedList Methods', () => {
             list.addToHead('C');
             list.addToHead('B');
             list.addToHead('A');
-            expect(list.length).to.eql(3);
+            expect(list.length).to.equal(3);
             list.removeFromTail();
-            expect(list.length).to.eql(2);
+            expect(list.length).to.equal(2);
             list.removeFromTail();
-            expect(list.length).to.eql(1);
+            expect(list.length).to.equal(1);
             list.removeFromTail();
-            expect(list.length).to.eql(0);
+            expect(list.length).to.equal(0);
         });
 
         it('Should remove and return the value from the tail', () => {
@@ -236,14 +236,14 @@ describe('DoublyLinkedList Methods', () => {
             list.addToTail('B');
             list.addToTail('A');
 
-            expect(list.removeFromTail()).to.eql('A');
-            expect(list.tail.value).to.eql('B');
+            expect(list.removeFromTail()).to.equal('A');
+            expect(list.tail.value).to.equal('B');
 
-            expect(list.removeFromTail()).to.eql('B');
-            expect(list.tail.value).to.eql('C');
+            expect(list.removeFromTail()).to.equal('B');
+            expect(list.tail.value).to.equal('C');
 
-            expect(list.removeFromTail()).to.eql('C');
-            expect(list.tail).to.eql(null);
+            expect(list.removeFromTail()).to.equal('C');
+            expect(list.tail).to.equal(null);
         });
 
         it('Should set the next pointer on the new tail to be null', () => {
@@ -251,8 +251,8 @@ describe('DoublyLinkedList Methods', () => {
             list.addToTail('B');
             list.addToTail('A');
 
-            list.removeFromHead();
-            expect(list.tail.next).to.eql(null);
+            list.removeFromTail();
+            expect(list.tail.next).to.equal(null);
         });
     });
 });
