@@ -68,15 +68,20 @@ describe('SinglyLinkedList', () => {
         describe('addToHead', () => {
             it('Should reassign the head pointer when new nodes are added to the head', () => {
                 expect(linkedList.head).to.equal(null);
+                linkedList.addToHead('C');
+                expect(linkedList.head).to.eql({ value: 'C', next: null });
                 linkedList.addToHead('B');
-                expect(linkedList.head).to.eql({ value: 'B', next: null });
+                expect(linkedList.head).to.eql({ value: 'B', next: { value: 'C', next: null }});
                 linkedList.addToHead('A');
-                expect(linkedList.head).to.eql({ value: 'A', next: { value: 'B', next: null } });
+                expect(linkedList.head).to.eql({ value: 'A', next: { value: 'B', next: { value: 'C', next: null }}});
             });
 
             it('Should reassign the head pointer when a new node is added to the head of an empty list', () => {
+                expect(linkedList.head).to.equal(null);
+                linkedList.addToHead('B');
+                expect(linkedList.head).to.eql({ value: 'B', next: null });
                 linkedList.addToHead('A');
-                expect(linkedList.head).to.eql({ value: 'A', next: null });
+                expect(linkedList.head).to.eql({ value: 'A', next: { value: 'B', next: null }});
             });
 
             it('Should update the length property after new nodes are added to the head', () => {
@@ -85,16 +90,22 @@ describe('SinglyLinkedList', () => {
                 expect(linkedList.length).to.equal(1);
                 linkedList.addToHead('B');
                 expect(linkedList.length).to.equal(2);
+                linkedList.addToHead('C');
+                expect(linkedList.length).to.equal(3);
             });
 
             it('Should return the updated list after new nodes are added to the head', () => {
-                expect(linkedList.addToHead('B')).to.eql({
-                    head: { value: 'B', next: null },
+                expect(linkedList.addToHead('C')).to.eql({
+                    head: { value: 'C', next: null },
                     length: 1
                 });
-                expect(linkedList.addToHead('A')).to.eql({
-                    head: { value: 'A', next: { value: 'B', next: null } },
+                expect(linkedList.addToHead('B')).to.eql({
+                    head: { value: 'B', next: { value: 'C', next: null }},
                     length: 2
+                });
+                expect(linkedList.addToHead('A')).to.eql({
+                    head: { value: 'A', next: { value: 'B', next: { value: 'C', next: null }}},
+                    length: 3
                 });
             });
         });
@@ -107,17 +118,19 @@ describe('SinglyLinkedList', () => {
                 expect(linkedList.head).to.eql({ value: 'A', next: { value: 'B', next: { value: 'C', next: null } } });
             });
 
-            it('Should reassign the head pointer when a new node is added to the tail of an empty list', () => {
+            it('Should reassign the head pointer only when a new node is added to the tail of an empty list', () => {
                 linkedList.addToTail('A');
                 expect(linkedList.head).to.eql({ value: 'A', next: null });
             });
 
             it('Should update the length property after new nodes are added to the tail', () => {
                 expect(linkedList.length).to.equal(0);
-                linkedList.addToTail('A');
-                expect(linkedList.length).to.equal(1);
                 linkedList.addToTail('B');
+                expect(linkedList.length).to.equal(1);
+                linkedList.addToTail('C');
                 expect(linkedList.length).to.equal(2);
+                linkedList.addToTail('D');
+                expect(linkedList.length).to.equal(3);
             });
 
             it('Should return the updated list after new nodes are added to the tail', () => {
@@ -129,6 +142,10 @@ describe('SinglyLinkedList', () => {
                     head: { value: 'A', next: { value: 'B', next: null } },
                     length: 2
                 });
+                expect(linkedList.addToTail('C')).to.eql({
+                    head: { value: 'A', next: { value: 'B', next: { value: 'C', next: null }}},
+                    length: 3
+                });
             });
         });
 
@@ -137,43 +154,41 @@ describe('SinglyLinkedList', () => {
                 expect(linkedList.removeFromHead()).to.equal(undefined);
             });
 
-            it('Should remove head node from the list when removeFromHead is called', () => {
+            it('Should remove head node from the list by reassigning the head pointer to the next node', () => {
                 linkedList.addToTail('A');
                 linkedList.addToTail('B');
+                linkedList.addToTail('C');
                 expect(linkedList.head.value).to.equal('A');
                 linkedList.removeFromHead();
                 expect(linkedList.head.value).to.equal('B');
-            });
-
-            it('Should reassign the head pointer to the next node in the list', () => {
-                linkedList.addToTail('A');
-                linkedList.addToTail('B');
-                expect(linkedList.head.value).to.equal('A');
                 linkedList.removeFromHead();
-                expect(linkedList.head.value).to.equal('B');
+                expect(linkedList.head.value).to.equal('C');
             });
 
-            it('Should update the length property after removing the head node', () => {
-                linkedList.addToTail('A');
+            it('Should properly update the length property after removing the head node', () => {
+                linkedList.addToHead('A');
                 linkedList.addToTail('B');
                 expect(linkedList.length).to.equal(2);
                 linkedList.removeFromHead();
                 expect(linkedList.length).to.equal(1);
                 linkedList.removeFromHead();
                 expect(linkedList.length).to.equal(0);
+                linkedList.removeFromHead();
+                expect(linkedList.length).to.equal(0);
             });
 
             it('Should reassign the head pointer to null when head is removed from a list of only one node', () => {
-                linkedList.addToTail('A');
-                expect(linkedList.length).to.equal(1);
+                linkedList.addToHead('A');
+                expect(linkedList.head).to.eql({ value: 'A', next: null });
                 linkedList.removeFromHead();
                 expect(linkedList.head).to.equal(null);
             });
 
             it('Should return the removed head node when removeFromHead is called', () => {
-                linkedList.addToTail('A');
+                linkedList.addToHead('A');
                 linkedList.addToTail('B');
                 expect(linkedList.removeFromHead()).to.eql({ value: 'A', next: { value: 'B', next: null } });
+                expect(linkedList.removeFromHead()).to.eql({ value: 'B', next: null });
             });
         });
 
@@ -183,16 +198,21 @@ describe('SinglyLinkedList', () => {
             });
 
             it('Should remove tail node from the list when removeFromTail is called', () => {
-                linkedList.addToTail('A');
+                linkedList.addToHead('A');
                 linkedList.addToTail('B');
+                linkedList.addToTail('C');
+                expect(linkedList.head).to.eql({ value: 'A', next: { value: 'B', next: { value: 'C', next: null }}});
+                linkedList.removeFromTail();
                 expect(linkedList.head).to.eql({ value: 'A', next: { value: 'B', next: null } });
                 linkedList.removeFromTail();
                 expect(linkedList.head).to.eql({ value: 'A', next: null });
+                linkedList.removeFromTail();
+                expect(linkedList.head).to.equal(null);
             });
 
             it('Should reassign the head pointer to null when tail is removed from a list of only one node', () => {
                 linkedList.addToTail('A');
-                expect(linkedList.length).to.equal(1);
+                expect(linkedList.head).to.eql({ value: 'A', next: null });
                 linkedList.removeFromTail();
                 expect(linkedList.head).to.equal(null);
             });
@@ -203,15 +223,19 @@ describe('SinglyLinkedList', () => {
                 linkedList.addToTail('C');
                 expect(linkedList.head.next.next).to.eql({ value: 'C', next: null });
                 linkedList.removeFromTail();
-                expect(linkedList.head.next.next).to.eql(null);
+                expect(linkedList.head.next).to.eql({ value: 'B', next: null });
+                linkedList.removeFromTail();
+                expect(linkedList.head.next).to.equal(null);
             });
 
-            it('Should update the length property after removing the tail node', () => {
+            it('Should correctly update the length property after removing the tail node', () => {
                 linkedList.addToTail('A');
                 linkedList.addToTail('B');
                 expect(linkedList.length).to.equal(2);
                 linkedList.removeFromTail();
                 expect(linkedList.length).to.equal(1);
+                linkedList.removeFromTail();
+                expect(linkedList.length).to.equal(0);
                 linkedList.removeFromTail();
                 expect(linkedList.length).to.equal(0);
             });
@@ -230,21 +254,22 @@ describe('SinglyLinkedList', () => {
             });
 
             it('Should return the value of the head for a non-empty list', () => {
-                linkedList.addToTail('A');
                 linkedList.addToTail('B');
                 linkedList.addToTail('C');
+                expect(linkedList.peekAtHead()).to.eql('B');
+                linkedList.addToHead('A');
                 expect(linkedList.peekAtHead()).to.eql('A');
             });
         });
 
         describe('print', () => {
-            it('Should not print anything when there are no nodes', () => {
+            it('Should not console.log anything when there are no nodes', () => {
                 const consoleSpy = chai.spy.on(console, 'log');
                 linkedList.print();
                 expect(consoleSpy).to.not.have.been.called();
             });
 
-            it('Should print the values of the nodes in the linked list in order from the head to the tail', () => {
+            it('Should console.log the values of the nodes in the linked list in order from head to tail', () => {
                 const consoleSpy = chai.spy.on(console, 'log');
                 linkedList.addToTail('B');
                 linkedList.addToTail('C');

@@ -59,7 +59,7 @@ class SinglyLinkedList {
     }
 
     peekAtHead() {
-        // Return value of head node
+        // Return the value of head node
 
         // Your code here
 
