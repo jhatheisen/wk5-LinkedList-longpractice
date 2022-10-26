@@ -260,7 +260,6 @@ class DoublyLinkedList {
         // Reverses the linked list in-place
 
         let midI = Math.floor(this.length / 2);
-        // console.log(`mid: ${midI}`);
         let first = 0
         let final = this.length - 1;
         while (first < midI) {
@@ -270,13 +269,12 @@ class DoublyLinkedList {
           let lastVal = last.value;
           first++;
           final--;
-          // console.log(`first: ${curr.value}`);
-          // console.log(`last: ${last.value}`);
           last.value = currVal;
           curr.value = lastVal;
         }
 
         // Write your hypothesis on the time complexity of this method here
+        // O(n), because the array is iterated through n / 2 times, where n is length of array, so O(n)
     }
 
 }
