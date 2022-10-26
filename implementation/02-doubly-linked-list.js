@@ -62,6 +62,7 @@ class DoublyLinkedList {
         }
         return removed;
         // Write your hypothesis on the time complexity of this method here
+        // O(1), constant amount of operations
     }
 
     removeFromTail() {
@@ -79,6 +80,7 @@ class DoublyLinkedList {
         return removed;
 
         // Write your hypothesis on the time complexity of this method here
+        // O(1), constant amount of ops
     }
 
     peekAtHead() {
@@ -98,6 +100,7 @@ class DoublyLinkedList {
         return this.tail.value;
 
         // Write your hypothesis on the time complexity of this method here
+        // O(1), constant 1 op
     }
 }
 
